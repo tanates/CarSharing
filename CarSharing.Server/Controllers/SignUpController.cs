@@ -8,16 +8,17 @@ using Microsoft.EntityFrameworkCore;
 using CarSharing.Models.AuthorizationModels;
 using CarSharing.Models.Repository;
 using CarSharing.Models.UserModels;
+using System.Net;
 
 namespace CarSharing.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SignInController : ControllerBase
+    public class SignUpController : ControllerBase
     {
         private readonly ApplicationContext _context;
-        private readonly ILogger <SignInController> _logger;
-        public SignInController(ApplicationContext context, ILogger<SignInController> logger)
+        private readonly ILogger <SignUpController> _logger;
+        public SignUpController(ApplicationContext context, ILogger<SignUpController> logger)
         {
             _context = context;
             _logger = logger;
@@ -38,7 +39,33 @@ namespace CarSharing.Server.Controllers
         public async Task<ActionResult<Registration>> PostRegistration(Registration registration)
         {
             _logger.LogInformation("Executing PostRegistration");
-            User user = new User
+            User user = new User();
+            if (!ModelState.IsValid)
+            {
+
+                return BadRequest(ModelState);
+            }
+
+            if (_context.Users.Any(i => i.Email == registration.Email))
+            {
+                if (_context.Users.Any(i => i.Name == registration.Name))
+                {
+                    var error = new { message = "This name and email  is occupied . Choose another one , or sign in" };
+                    return Conflict(error);
+
+                }
+                var errorResponse = new { message = "This user is already registered" };
+                return Conflict(errorResponse);
+            }
+
+            if (_context.Users.Any(i => i.Name == registration.Name))
+            {
+                var errorResponse = new { message = "This name  is occupied . Choose another one" };
+                return Conflict(errorResponse);
+            }
+              
+           
+            user = new User
             {
                 Id = Guid.NewGuid(),
                 Password = registration.Password,
@@ -47,6 +74,14 @@ namespace CarSharing.Server.Controllers
                 ActivatedAccount = false,
                 RoleId = 1
             };
+
+            Login login = new Login
+            {
+                UserName = registration.Name,
+                Password = registration.Password,
+                Email = registration.Email,
+            };
+            _context.Login.Add(login);
             _context.Users.Add(user);
             _context.Registration.Add(registration);
             await _context.SaveChangesAsync();

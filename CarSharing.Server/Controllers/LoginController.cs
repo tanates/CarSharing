@@ -1,8 +1,10 @@
 ﻿using CarSharing.Models.AuthorizationModels;
+using CarSharing.Models.Repository;
 using CarSharing.Models.UserModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarSharing.Server.Controllers
 {
@@ -10,28 +12,30 @@ namespace CarSharing.Server.Controllers
     [Route("[controller]")]
     public class LoginController : ControllerBase
     {
-        private readonly SignInManager<Login> _signInManager;
+        private readonly ApplicationContext _context;
 
-        public LoginController(SignInManager<Login> signInManager)
+        public LoginController(ApplicationContext context)
         {
-            _signInManager = signInManager;
+           _context = context;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] User model)
+        public async Task<IActionResult> Login(Login model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
-            if (result.Succeeded)
+            var user =  await _context.Login.FirstOrDefaultAsync(i=>i.UserName == model.UserName && i.Password==model.Password 
+            ||i.Email == model.Email &&i.Password == model.Password);
+            if (user != null)
             {
-                return Ok(new { redirectTo = "/Home/Index" });
+                // Пользователь с указанным логином не найден
+                return Ok(new { redirectTo = "/home" });
             }
-
-            return BadRequest("Invalid login attempt.");
+             else
+               return BadRequest(new { message = "Invalid username or password" });
         }
     }
 }

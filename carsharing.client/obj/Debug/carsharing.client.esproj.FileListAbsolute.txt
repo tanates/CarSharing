@@ -1,1 +1,2 @@
 C:\Users\Acer\Desktop\CarSharing\carsharing.client\obj\Debug\carsharing.client.esproj.CoreCompileInputs.cache
+C:\Users\timur\Desktop\CarSharing\carsharing.client\obj\Debug\carsharing.client.esproj.CoreCompileInputs.cache

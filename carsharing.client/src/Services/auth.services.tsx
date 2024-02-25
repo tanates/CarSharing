@@ -1,6 +1,6 @@
 import axios from  'axios'
 
-const API_URl  = "http//localhost:7228/api/auth"
+const API = 'https://localhost:7228/api/';
 
 
 
@@ -10,7 +10,7 @@ class AuthServices  {
     login (email:string  , password : string ){
 
          return axios
-             .post(API_URl + 'SingIn', {
+             .post('https://localhost:7228/Login', {
                 email, 
                 password, 
              }).then(response =>{
@@ -21,7 +21,7 @@ class AuthServices  {
              });
     }
     registration(email:string , name:string , password :string , confirmPassword:string){
-        return axios.post(API_URl +'SignUp' , {
+        return axios.post(API +'signup' , {
             email, 
             name, 
             password, 

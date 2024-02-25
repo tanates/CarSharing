@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace CarSharing.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class CarReact : Migration
+    public partial class Car : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -68,7 +70,8 @@ namespace CarSharing.Server.Migrations
                 name: "Role",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -110,17 +113,17 @@ namespace CarSharing.Server.Migrations
                     DriversLicense = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PassportNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ActivatedAccount = table.Column<bool>(type: "bit", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
-                    RoleId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Role_RoleId1",
-                        column: x => x.RoleId1,
+                        name: "FK_Users_Role_RoleId",
+                        column: x => x.RoleId,
                         principalTable: "Role",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -176,6 +179,21 @@ namespace CarSharing.Server.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.InsertData(
+                table: "Role",
+                columns: new[] { "Id", "RoleName" },
+                values: new object[,]
+                {
+                    { 1, "User" },
+                    { 2, "Admin" },
+                    { 3, "Moderator" }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_carModels_CarBrandsId1",
+                table: "carModels",
+                column: "CarBrandsId1");
+
             migrationBuilder.CreateIndex(
                 name: "IX_CarRentals_CarId",
                 table: "CarRentals",
@@ -192,14 +210,9 @@ namespace CarSharing.Server.Migrations
                 column: "carRentalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleId1",
+                name: "IX_Users_RoleId",
                 table: "Users",
-                column: "RoleId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_carModels_CarBrandsId1",
-                table: "carModels",
-                column: "CarBrandsId1");
+                column: "RoleId");
         }
 
         /// <inheritdoc />

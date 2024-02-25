@@ -229,9 +229,11 @@ namespace CarSharing.Server.Migrations
 
             modelBuilder.Entity("CarSharing.Models.UserModels.Role", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("RoleName")
                         .HasColumnType("nvarchar(max)");
@@ -239,6 +241,23 @@ namespace CarSharing.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Role");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            RoleName = "User"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            RoleName = "Admin"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            RoleName = "Moderator"
+                        });
                 });
 
             modelBuilder.Entity("CarSharing.Models.UserModels.User", b =>
@@ -268,15 +287,12 @@ namespace CarSharing.Server.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("RoleId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId1");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -318,7 +334,9 @@ namespace CarSharing.Server.Migrations
                 {
                     b.HasOne("CarSharing.Models.UserModels.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleId1");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
                 });

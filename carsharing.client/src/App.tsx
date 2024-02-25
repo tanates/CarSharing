@@ -1,149 +1,155 @@
 import { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
 
-import authService from "./Services/auth.services";
-import IUser from '';
+import AuthService from "./Services/auth.services";
+import IUser from './types/IUser';
 
-import Login from "./Login/index";
-import Register from "./Registrations/index";
-/*import Home from "./components/home.component";
-import Profile from "./components/profile.component";
-import BoardUser from "./components/board-user.component";
-import BoardModerator from "./components/board-moderator.component";
-import BoardAdmin from "./components/board-admin.component";
+import Login from "./Components/Login/index";
+import Register from "./Components/Registrations/index";
+import Home from "./Components/Home/Home";
+import Profile from "./Components/Profile/Profile";
+import BoardUser from "./Components/Board/BoardUser";
+import BoardModerator from "./Components/Board/BoardModerator";
+import BoardAdmin from "./Components/Board/BoardAdmin";
 
-import EventBus from "./common/EventBus";*/
+import EventBus from "./Common/EventBus";
 
 type Props = {};
 
 type State = {
-showModeratorBoard: boolean,
-showAdminBoard: boolean,
-currentUser: IUser | undefined
+  showModeratorBoard: boolean,
+  showAdminBoard: boolean,
+  currentUser: IUser | undefined
 }
 
 class App extends Component<Props, State> {
-constructor(props: Props) {
-super(props);
-this.logOut = this.logOut.bind(this);
+  constructor(props: Props) {
+    super(props);
+    this.logOut = this.logOut.bind(this);
 
-this.state = {
-showModeratorBoard: false,
-showAdminBoard: false,
-currentUser: undefined,
-};
-}
+    this.state = {
+      showModeratorBoard: false,
+      showAdminBoard: false,
+      currentUser: undefined,
+    };
+  }
 
-componentDidMount() {
-const user = authService.getCurentUser();
+  componentDidMount() {
+    const user = AuthService.getCurentUser();
 
-if (user) {
-this.setState({
-currentUser: user,
-showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
-showAdminBoard: user.roles.includes("ROLE_ADMIN"),
-});
-}
+    if (user) {
+      this.setState({
+        currentUser: user,
+        showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
+        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+      });
+    }
 
-/*EventBus.on("logout", this.logOut);
-}
+    EventBus.on("logout", this.logOut);
+  }
 
-componentWillUnmount() {
-EventBus.remove("logout", this.logOut);
-}
+  componentWillUnmount() {
+    EventBus.remove("logout", this.logOut);
+  }
 
-logOut() {
-AuthService.logout();
-this.setState({
-showModeratorBoard: false,
-showAdminBoard: false,
-currentUser: undefined,
-});*/
-}
-render() {
-const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+  logOut() {
+    AuthService.logout();
+    this.setState({
+      showModeratorBoard: false,
+      showAdminBoard: false,
+      currentUser: undefined,
+    });
+  }
 
-return (
-<div>
-<nav className="navbar navbar-expand navbar-dark bg-dark">
-<Link to={"/"} className="navbar-brand">
-bezKoder
-</Link>
-<div className="navbar-nav mr-auto">
-<li className="nav-item">
-<Link to={"/home"} className="nav-link">
-Home
-</Link>
-</li>
+  render() {
+    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
 
-{showModeratorBoard && (
-<li className="nav-item">
-<Link to={"/mod"} className="nav-link">
-Moderator Board
-</Link>
-</li>
-)}
+    return (
+      <div>
+        <nav className="navbar navbar-expand navbar-dark bg-dark">
+          <Link to={"/"} className="navbar-brand">
+            bezKoder
+          </Link>
+          <div className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <Link to={"/home"} className="nav-link">
+                Home
+              </Link>
+            </li>
 
-{showAdminBoard && (
-<li className="nav-item">
-<Link to={"/admin"} className="nav-link">
-Admin Board
-</Link>
-</li>
-)}
+            {showModeratorBoard && (
+              <li className="nav-item">
+                <Link to={"/mod"} className="nav-link">
+                  Moderator Board
+                </Link>
+              </li>
+            )}
 
-{currentUser && (
-<li className="nav-item">
-<Link to={"/user"} className="nav-link">
-User
-</Link>
-</li>
-)}
-</div>
+            {showAdminBoard && (
+              <li className="nav-item">
+                <Link to={"/admin"} className="nav-link">
+                  Admin Board
+                </Link>
+              </li>
+            )}
 
-{currentUser ? (
-<div className="navbar-nav ml-auto">
-<li className="nav-item">
-<Link to={"/profile"} className="nav-link">
-{currentUser.username}
-</Link>
-</li>
-<li className="nav-item">
-<a href="/login" className="nav-link" onClick={this.logOut}>
-LogOut
-</a>
-</li>
-</div>
-) : (
-<div className="navbar-nav ml-auto">
-<li className="nav-item">
-<Link to={"/login"} className="nav-link">
-Login
-</Link>
-</li>
+            {currentUser && (
+              <li className="nav-item">
+                <Link to={"/user"} className="nav-link">
+                  User
+                </Link>
+              </li>
+            )}
+          </div>
 
-<li className="nav-item">
-<Link to={"/register"} className="nav-link">
-Sign Up
-</Link>
-</li>
-</div>
-)}
-</nav>
+          {currentUser ? (
+            <div className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to={"/profile"} className="nav-link">
+                  {currentUser.username}
+                </Link>
+              </li>
+              <li className="nav-item">
+                <a href="/login" className="nav-link" onClick={this.logOut}>
+                  LogOut
+                </a>
+              </li>
+            </div>
+          ) : (
+            <div className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to={"/login"} className="nav-link">
+                  Login
+                </Link>
+              </li>
 
-<div className="container mt-3">
-<Switch>
-    <Route path="/login" element={<Login />} />
-    <Route path="/register" element={<Register />} />
-</Switch>
-</div>
+              <li className="nav-item">
+                <Link to={"/register"} className="nav-link">
+                  Sign Up
+                </Link>
+              </li>
+            </div>
+          )}
+        </nav>
 
-{ /*<AuthVerify logOut={this.logOut}/> */}
-</div>
-);
-}
+        <div className="container mt-3">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/user" element={<BoardUser />} />
+            <Route path="/mod" element={<BoardModerator />} />
+            <Route path="/admin" element={<BoardAdmin />} />
+          </Routes>
+        </div>
+
+        { /*<AuthVerify logOut={this.logOut}/> */}
+      </div>
+    );
+  }
 }
 
 export default App;

@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import authServices from '../Services/auth.services';
+import authServices from '../../Services/auth.services';
 
 interface Props { }
 interface State {
@@ -13,7 +13,8 @@ interface State {
     message: string;
 }
 
-export default class Register extends Component<Props, State> {
+
+export default class Register extends Component<Props, State > {
     constructor(props: Props) {
         super(props);
         this.handleRegister = this.handleRegister.bind(this);
@@ -26,6 +27,7 @@ export default class Register extends Component<Props, State> {
             message: ""
         };
     }
+    
 
     validationSchema() {
         return Yup.object().shape({
@@ -52,26 +54,26 @@ export default class Register extends Component<Props, State> {
             confirmPassword
         ).then(
             response => {
-                this.setState({
-                    message: response.data.message,
-                    successful: true
-                });
+              this.setState({
+                message: response.data.message,
+                successful: true
+              });
             },
             error => {
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-
-                this.setState(
-                    {
-                        successful: false,
-                        message: resMessage
-                    });
+              const resMessage =
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+                error.message ||
+                error.toString();
+      
+              this.setState({
+                successful: false,
+                message: resMessage
+              });
             }
-        );
+          );
+        
     }
 
     render() {
@@ -126,6 +128,19 @@ export default class Register extends Component<Props, State> {
                                                             If you have an account! <a href="/Login" className='text-white-50 fw-bold'>Sign In</a>
                                                         </p>
                                                     </div>
+                                                    {message && (
+                                                        <div className="form-group">
+                                                        <div
+                                                            className={
+                                                            successful ? "alert alert-success" : "alert alert-danger"
+                                                            }
+                                                            role="alert"
+                                                        >
+                                                            {message}
+                                                        
+                                                        </div>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>

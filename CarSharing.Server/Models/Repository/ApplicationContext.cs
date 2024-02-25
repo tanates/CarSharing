@@ -22,5 +22,13 @@ namespace CarSharing.Models.Repository
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Role>().HasData(
+                new Role {Id = 1, RoleName = "User" },
+                new Role { Id = 2, RoleName = "Admin" },
+                new Role {Id = 3, RoleName = "Moderator" }
+            );
+        }
     }
 }

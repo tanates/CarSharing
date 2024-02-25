@@ -37,11 +37,7 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-app.MapPost("/api/SingIn", (ILogger<Program> logger) =>
-{
 
-    logger.LogInformation($"Path: /hello  Time: {DateTime.Now.ToLongTimeString()}");
-});
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.UseCors("AllowSpecificOrigin");
