@@ -1,17 +1,19 @@
 import './style.css';
-import { Component, ErrorInfo } from 'react'
+import { Component } from 'react'
+import { RouteComponentProps } from 'react-router-dom';
 import { Formik , Field , Form , ErrorMessage} from "formik";
 import * as Yup from 'yup';
 import authServices from '../Services/auth.services';
-interface Props {
-
+interface RouterProps {
+     history:string
 }
+type Props = RouteComponentProps<RouterProps>
 interface State {
     redirect :string | null , 
     userEmail :string ,
     password :string , 
     loading :boolean , 
-    messange :string 
+    message :string 
 }
 
 export default class Login extends Component<Props , State> {
@@ -24,28 +26,54 @@ export default class Login extends Component<Props , State> {
             userEmail : "",
             password :"" ,
             loading:false,
-            messange:"",
+            message:"",
         }
     }
     componentDidMount(){
         const currentUser = authServices.getCurentUser();
         if (currentUser){
-            this.setState({redirect "/profile"});
+            this.setState({redirect: "/profile"});
         };   
     }
     validationSchema() {
         return Yup.object().shape({
-            userEmail: [Yup Schema],
-            password: [Yup Schema],
+            userEmail: Yup.string().required("This is field is required!"),
+            password:  Yup.string().required("This is field is required!"),
         });
     }
     
     handleLogin(formValue: { userEmail: string; password: string }) {
-        const { username, password } = formValue;
-        
-    }
+        const { userEmail, password } = formValue;
+
+        this.setState ({
+            message : "", 
+            loading :true
+        });
+
+     authServices.login (userEmail , password).then(
+            ()=>{
+                this.props.history.push("/profile");
+                window.location.reload();
+            }, 
+            error => {
+                const resMessage= (
+                    error.response &&
+                    error.response.date&&
+                    error.response.data.message)||
+                    error.message||
+                    error.toString();
+
+                    this.setState({
+                        loading:false , 
+                        message : resMessage
+                    });
+                }
+             );
+     }
     
-    render() {
+    render() {               
+        const {loading , message} = this.state;
+       
         const initialValues = {
         userEmail: "",
         password: "",

@@ -1,6 +1,6 @@
 import axios from  'axios'
 
-const API_URl  = "http//localhost:7228/api/SignUp"
+const API_URl  = "http//localhost:7228/api/auth"
 
 
 
@@ -10,7 +10,7 @@ class AuthServices  {
     login (email:string  , password : string ){
 
          return axios
-             .post(API_URl , {
+             .post(API_URl + 'SingIn', {
                 email, 
                 password, 
              }).then(response =>{
@@ -21,13 +21,17 @@ class AuthServices  {
              });
     }
     registration(email:string , name:string , password :string , confirmPassword:string){
-        return axios.post(API_URl{
+        return axios.post(API_URl +'SignUp' , {
             email, 
             name, 
             password, 
             confirmPassword
         });
 
+    }
+
+    logout(){
+        localStorage.removeItem("user");
     }
 
     getCurentUser(){

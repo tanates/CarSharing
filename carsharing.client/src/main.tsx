@@ -1,19 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+
+import ReactDOM from 'react-dom/client';
 import './index.css'
-import 'bootstrap/dist/css/bootstrap.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Login from './Login/index.tsx';
-import Registrations from './Registrations/index.tsx';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App.tsx';
 
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+const root =ReactDOM.createRoot(document.getElementById('root')as HTMLElement) ;
+root.render (
    <BrowserRouter>
-            <Routes>
-                <Route path="Login" element={<Login email={"email"} password={"password"}/>}/>
-                <Route path="Registrations" element={<Registrations email={"email"} password={"password"} name={"name"} confirmPassword={"confirmPassword"}/>}/>
-            </Routes>
-    </BrowserRouter>
-  </React.StrictMode>
+     <App/>
+   </BrowserRouter>
 )
