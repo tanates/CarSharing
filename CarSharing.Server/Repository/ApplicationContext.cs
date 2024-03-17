@@ -4,15 +4,15 @@ using CarSharing.Models.UserModels;
 using Microsoft.EntityFrameworkCore;
 using CarSharing.Models.AuthorizationModels;
 
-namespace CarSharing.Models.Repository
+namespace CarSharing.Server.Repository
 {
     public class ApplicationContext : DbContext
     {
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
         public DbSet<CarBrands> Brands { get; set; }
         public DbSet<CarModel> carModels { get; set; }
-        public DbSet<ActiveCarRental>CarRentals { get; set; }
+        public DbSet<ActiveCarRental> CarRentals { get; set; }
         public DbSet<RentalHistory> RentalHistory { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Registration> Registration { get; set; } = default!;
@@ -25,9 +25,9 @@ namespace CarSharing.Models.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasData(
-                new Role {Id = 1, RoleName = "User" },
+                new Role { Id = 1, RoleName = "User" },
                 new Role { Id = 2, RoleName = "Admin" },
-                new Role {Id = 3, RoleName = "Moderator" }
+                new Role { Id = 3, RoleName = "Moderator" }
             );
         }
     }

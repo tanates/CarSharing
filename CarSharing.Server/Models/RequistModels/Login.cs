@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarSharing.Models.AuthorizationModels
 {
-    public class Login : IdentityUser
+    public class Login 
     {
+        public Guid Id { get; set; }
         [Required(ErrorMessage = "Не указан Email")]
         [EmailAddress]
         public string Email { get; set; }

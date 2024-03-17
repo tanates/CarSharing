@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\timur\\Desktop\\CarSharing\\CarSharing.Server\\CarSharing.Server.csproj": {}
+    "E:\\CarSharing\\CarSharing.Server\\CarSharing.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\timur\\Desktop\\CarSharing\\CarSharing.Server\\CarSharing.Server.csproj": {
+    "E:\\CarSharing\\CarSharing.Server\\CarSharing.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\timur\\Desktop\\CarSharing\\CarSharing.Server\\CarSharing.Server.csproj",
+        "projectUniqueName": "E:\\CarSharing\\CarSharing.Server\\CarSharing.Server.csproj",
         "projectName": "CarSharing.Server",
-        "projectPath": "C:\\Users\\timur\\Desktop\\CarSharing\\CarSharing.Server\\CarSharing.Server.csproj",
+        "projectPath": "E:\\CarSharing\\CarSharing.Server\\CarSharing.Server.csproj",
         "packagesPath": "C:\\Users\\timur\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\timur\\Desktop\\CarSharing\\CarSharing.Server\\obj\\",
+        "outputPath": "E:\\CarSharing\\CarSharing.Server\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -44,6 +44,18 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
             "Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter": {
               "target": "Package",
               "version": "[8.0.2, )"

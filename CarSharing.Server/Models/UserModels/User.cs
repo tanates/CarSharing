@@ -1,21 +1,30 @@
-﻿using CarSharing.Models.AuthorizationModels;
-using CarSharing.Models.Rental;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
-namespace CarSharing.Models.UserModels
+namespace CarSharing.Server.Models.UserModels
 {
     public class User
     {
-        public Guid Id { get; set; }
-        public string? Password { get; set; }
-        public string? Name { get; set; }
-        public string? Surname { get; set; }
-        public string? Email { get; set; }
-        public string? DriversLicense { get; set; }
-        public string? PassportNumber{ get; set; }
-        public bool ActivatedAccount { get; set; }
-        public int RoleId { get; set; }
-        public Role? Role { get; set; }
-        public List<ActiveCarRental>? carRentals { get; set; }
+        public User(Guid id, string passwordHash, string name, string email, string roleName)
+        {
+            Email = email;
+            Id = id;
+            PasswordHash = passwordHash;
+            Name = name;
+            RoleName = roleName;
+        }
+
+         public Guid Id { get; set; }
+        public string RoleName { get; private set; }
+        public string  Name { get; set; }
+        public string PasswordHash { get;private set; }
+        public string Email { get; private  set; }
+
+        public static User Creat(Guid id, string email, string password, string name)
+        {
+
+            return new User(id , password, name, email, "User");
+                
+         }
     }
 }

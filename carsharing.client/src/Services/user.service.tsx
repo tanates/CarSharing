@@ -2,11 +2,11 @@ import axios  from "axios";
 import authHeader  from "./data.services";
 
 
-const API_URl = 'http://localhost:7228/api/SignIn'
+const API_URl = 'http://localhost:7228/Profile'
 
 class UserService {
     getPublicContent(){
-        return axios.get(API_URl+'all')
+        return axios.get(API_URl)
     }
 
     getUserBoard (){

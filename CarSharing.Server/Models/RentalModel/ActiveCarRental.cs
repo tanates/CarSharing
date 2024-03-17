@@ -14,7 +14,7 @@ namespace CarSharing.Models.Rental
         public string? CarLicensePlate { get; set; }
         public string? CarName { get; set; }
         public CarModel? Car { get; set; }
-        public User? User { get; set; }
+        public UserEntity? User { get; set; }
         public List<RentalHistory>? rentalHistories { get; set; }
     }
 }

@@ -3,7 +3,7 @@
 "ServerUrl": "https://localhost:5173",
 "RedirectUrl": "",
 "LaunchCommand": "npm run dev",
-"WorkingDirectory": "C:\\Users\\timur\\Desktop\\CarSharing\\CarSharing.Server\\..\\carsharing.client",
+"WorkingDirectory": "E:\\CarSharing\\CarSharing.Server\\..\\carsharing.client",
 "MaxTimeoutInSeconds": "120",
 "KeepRunning": "false"
 }
