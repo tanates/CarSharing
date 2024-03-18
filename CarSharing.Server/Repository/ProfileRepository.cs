@@ -60,5 +60,14 @@ namespace CarSharing.Server.Repository
             return true;
         }
 
+        public async Task <bool> UpdatePasswod ()
+        {
+
+
+            return true;
+        }
+
+
+
     }
 }

@@ -1,10 +1,10 @@
 ﻿namespace CarSharing.Models.CarModels
 {
-    public class CarBrands
+    public class CarBrandsEntity
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }
-        public List<CarModel> Cars { get; set; } = new();
+        public List<CarModelEntity> Cars { get; set; } = new();
 
     }
 }
