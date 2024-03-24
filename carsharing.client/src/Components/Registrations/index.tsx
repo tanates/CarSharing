@@ -5,8 +5,8 @@ import authServices from '../../Services/auth.services';
 
 interface Props { }
 interface State {
-    userEmail: string;
-    username: string;
+    Name: string;
+    Email: string;
     password: string;
     confirmPassword: string;
     successful: boolean;
@@ -19,8 +19,8 @@ export default class Register extends Component<Props, State > {
         super(props);
         this.handleRegister = this.handleRegister.bind(this);
         this.state = {
-            userEmail: "",
-            username: "",
+            Name: "",
+            Email: "",
             password: "",
             confirmPassword: "",
             successful: false,
@@ -31,8 +31,8 @@ export default class Register extends Component<Props, State > {
 
     validationSchema() {
         return Yup.object().shape({
-            username: Yup.string().required("This field is required"),
-            userEmail: Yup.string()
+            Name: Yup.string().required("This field is required"),
+            Email: Yup.string()
                 .email("This is not a valid email")
                 .required("This field is required"),
             password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
@@ -40,16 +40,16 @@ export default class Register extends Component<Props, State > {
         });
     }
 
-    handleRegister(formValue: { username: string, userEmail: string, password: string, confirmPassword: string }) {
-        const { username, userEmail, password, confirmPassword } = formValue;
+    handleRegister(formValue: { Email: string, Name: string, password: string, confirmPassword: string }) {
+        const { Email, Name, password, confirmPassword } = formValue;
         this.setState({
             message: "",
             successful: false
         });
 
-        authServices.registration(
-            userEmail,
-            username,
+        authServices.register(
+            Name,
+            Email,
             password,
             confirmPassword
         ).then(
@@ -80,8 +80,8 @@ export default class Register extends Component<Props, State > {
         const { successful, message } = this.state;
 
         const initialValues = {
-            userEmail: "",
-            username: "",
+            Name: "",
+            Email: "",
             password: "",
             confirmPassword: ""
         };
@@ -104,13 +104,13 @@ export default class Register extends Component<Props, State > {
                                                     <p className='text-white-50 mb-5'>Registration Info</p>
                                                     <div className="form-outline form-white mb-4">
                                                         <label htmlFor="username">Username</label>
-                                                        <Field type="text" id="username" name="username" className="form-control" />
-                                                        <ErrorMessage name="username" component="div" className="error" />
+                                                        <Field type="text" id="Name" name="Name" className="form-control" />
+                                                        <ErrorMessage name="Name" component="div" className="error" />
                                                     </div>
                                                     <div className="form-outline form-white mb-4">
-                                                        <label htmlFor="userEmail">Email</label>
-                                                        <Field type="email" id="userEmail" name="userEmail" className="form-control" />
-                                                        <ErrorMessage name="userEmail" component="div" className="error" />
+                                                        <label htmlFor="Email">Email</label>
+                                                        <Field type="Email" id="Email" name="Email" className="form-control" />
+                                                        <ErrorMessage name="Email" component="div" className="error" />
                                                     </div>
                                                     <div className="form-outline form-white mb-4">
                                                         <label htmlFor="password">Password</label>

@@ -5,7 +5,7 @@ namespace CarSharing.Server.Models.UserModels
 {
     public class User
     {
-        public User(Guid id, string passwordHash, string name, string email, string roleName)
+        public User(Guid id, string passwordHash, string name, string email, string roleName, double userBalance)
         {
             Email = email;
             Id = id;
@@ -15,15 +15,16 @@ namespace CarSharing.Server.Models.UserModels
         }
 
          public Guid Id { get; set; }
+        public double UserBalance { get; private set; }
         public string RoleName { get; private set; }
         public string  Name { get; set; }
         public string PasswordHash { get;private set; }
         public string Email { get; private  set; }
 
-        public static User Creat(Guid id, string email, string password, string name)
+        public static User Creat(Guid id, string email, string password, string name, double userBalance)
         {
 
-            return new User(id , password, name, email, "User");
+            return new User(id , password, name, email, "User" , 0);
                 
          }
     }

@@ -8,5 +8,7 @@ namespace CarSharing.Server.Interface.Auth
     {
         Task<bool> Update(ProfileUser profile);
         public Task<UserEntity> GetProfileByEmail(string email);
+        public  Task<bool> CheckIsActivation(string email);
+
     }
 }

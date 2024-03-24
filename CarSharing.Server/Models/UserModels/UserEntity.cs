@@ -9,6 +9,7 @@ namespace CarSharing.Models.UserModels
   
         public Guid Id { get; set; }
         public string PasswordHash { get; set; }
+        public double? UserBalance { get; set; }
         public  string? PhoneNumber { get; set; }
         public string? Name { get; set; }
         public string? Surname { get; set; }
@@ -18,7 +19,7 @@ namespace CarSharing.Models.UserModels
         public bool ActivatedAccount { get; set; }
         public string RoleName { get; set; }
         public Role? Role { get; set; }
-        public List<ActiveCarRental>? carRentals { get; set; }
+        public List<RentalHistoryEntity>? carRentalsHistory { get; set; }
 
     }
 }

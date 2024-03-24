@@ -25,6 +25,8 @@ namespace CarSharing.Server.Repository
                 PasswordHash = user.PasswordHash,
                 Email = user.Email,
                 RoleName= user.RoleName,
+                UserBalance = user.UserBalance ,
+                
             };
             await _context.Users.AddAsync(userEntity);
             await _context.SaveChangesAsync();

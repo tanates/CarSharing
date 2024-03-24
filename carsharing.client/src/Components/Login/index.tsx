@@ -1,5 +1,5 @@
-import { Component } from "react";
-import { Navigate } from "react-router-dom";
+import React, { useState } from "react";
+import {  NavigateFunction, useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./style.css"
@@ -7,63 +7,37 @@ import AuthService from "../../Services/auth.services";
 
 type Props = {};
 
-type State = {
-  redirect: string | null,
-  username: string,
-  password: string,
-  loading: boolean,
-  message: string
-};
+const Login: React.FC<Props> = () => {
+  let navigate: NavigateFunction = useNavigate();
 
-export default class Login extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.handleLogin = this.handleLogin.bind(this);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
 
-    this.state = {
-      redirect: null,
-      username: "",
-      password: "",
-      loading: false,
-      message: ""
-    };
-  }
+  const initialValues: {
+    username: string;
+    password: string;
+  } = {
+    username: "",
+    password: "",
+  };
 
-  componentDidMount() {
-    const currentUser = AuthService.getCurentUser();
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required("This field is required!"),
+    password: Yup.string().required("This field is required!"),
+  });
 
-    if (currentUser) {
-      this.setState({ redirect: "/profile" });
-    };
-  }
-
-  componentWillUnmount() {
-    window.location.reload();
-  }
-
-  validationSchema() {
-    return Yup.object().shape({
-      username: Yup.string().required("This field is required!"),
-      password: Yup.string().required("This field is required!"),
-    });
-  }
-
-  handleLogin(formValue: { username: string; password: string }) {
+  const handleLogin = (formValue: { username: string; password: string }) => {
     const { username, password } = formValue;
 
-    this.setState({
-      message: "",
-      loading: true
-    });
-
+    setMessage("");
+    setLoading(true);
 
     AuthService.login(username, password).then(
       () => {
-        this.setState({
-          redirect: "/profile"
-        });
+        navigate("/profile");
+        window.location.reload();
       },
-      error => {
+      (error) => {
         const resMessage =
           (error.response &&
             error.response.data &&
@@ -71,81 +45,75 @@ export default class Login extends Component<Props, State> {
           error.message ||
           error.toString();
 
-        this.setState({
-          loading: false,
-          message: resMessage
-        });
+        setLoading(false);
+        setMessage(resMessage);
       }
     );
-  }
+  };
 
-  render() {
-    if (this.state.redirect) {
-      return <Navigate to={this.state.redirect} />
-    }
-
-    const { loading, message } = this.state;
-
-    const initialValues = {
-      username: "",
-      password: "",
-    };
 
     return (
-      <div className="col-md-12">
-        <div className="card card-container">
-          <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          />
+      <div className='container py-1 h-100'>
+          <div className='row d-flex justify-content-center align-items-center h-100'>
+              <div className='col-12 col-md-8 col-lg-6 col-xl-5'>
+                  <div className='card bg-dark text-white' style={{ borderRadius: '1rem' }}>
+                      <div className='card-body p-3 text-center'>
+                          <div className='mb-md-5 mt-md-4 pb-5'>
 
-          <Formik
-            initialValues={initialValues}
-            validationSchema={this.validationSchema}
-            onSubmit={this.handleLogin}
-          >
-            <Form>
-              <div className="form-group">
-                <label htmlFor="username">Email</label>
-                <Field name="username" type="text" className="form-control" />
-                <ErrorMessage
-                  name="username"
-                  component="div"
-                  className="alert alert-danger"
-                />
-              </div>
+                                 <img src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" alt="avatar" className="rounded-circle img-fluid" style={{ width: '150px' }}></img>
 
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <Field name="password" type="password" className="form-control" />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="alert alert-danger"
-                />
-              </div>
+                                <Formik
+                                  initialValues={initialValues}
+                                  validationSchema={validationSchema}
+                                  onSubmit={handleLogin}
+                                >
+                                  <Form>
+                                    <div className="form-group">
+                                      <label htmlFor="username">Email</label>
+                                      <Field name="username" type="text" className="form-control" />
+                                      <ErrorMessage
+                                        name="username"
+                                        component="div"
+                                        className="alert alert-danger"
+                                      />
+                                    </div>
 
-              <div className="form-group">
-                <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-                  {loading && (
-                    <span className="spinner-border spinner-border-sm"></span>
-                  )}
-                  <span>Login</span>
-                </button>
-              </div>
+                                    <div className="form-group">
+                                      <label htmlFor="password">Password</label>
+                                      <Field name="password" type="password" className="form-control" />
+                                      <ErrorMessage
+                                        name="password"
+                                        component="div"
+                                        className="alert alert-danger"
+                                      />
+                                    </div>
 
-              {message && (
-                <div className="form-group">
-                  <div className="alert alert-danger" role="alert">
-                    {message}
-                  </div>
-                </div>
-              )}
-            </Form>
-          </Formik>
+                                    <div className="form-group">
+                                      <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+                                        {loading && (
+                                          <span className="spinner-border spinner-border-sm"></span>
+                                        )}
+                                        <span>Login</span>
+                                      </button>
+                                    </div>
+
+                                    {message && (
+                                      <div className="form-group">
+                                        <div className="alert alert-danger" role="alert">
+                                          {message}
+                                        </div>
+                                      </div>
+                                    )}
+                                  </Form>
+                                </Formik>
+
+
+          </div>
+         </div>
+         </div>
+         </div>                      
         </div>
       </div>
     );
-    }
 }
+export default Login;

@@ -68,7 +68,7 @@ namespace CarSharing.Server.Migrations
                     b.ToTable("Registration");
                 });
 
-            modelBuilder.Entity("CarSharing.Models.CarModels.CarBrands", b =>
+            modelBuilder.Entity("CarSharing.Models.CarModels.CarBrandsEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,23 +82,31 @@ namespace CarSharing.Server.Migrations
                     b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("CarSharing.Models.CarModels.CarModel", b =>
+            modelBuilder.Entity("CarSharing.Models.CarModels.CarModelEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CarBrandsId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("CarBrandsId1")
+                    b.Property<Guid?>("CarBrandsId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CarBrandsName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CarDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CarLicensePlate")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgCar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsActiveCarRental")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -108,12 +116,12 @@ namespace CarSharing.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarBrandsId1");
+                    b.HasIndex("CarBrandsId");
 
                     b.ToTable("carModels");
                 });
 
-            modelBuilder.Entity("CarSharing.Models.Rental.ActiveCarRental", b =>
+            modelBuilder.Entity("CarSharing.Models.Rental.ActiveCarRentalEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,34 +136,30 @@ namespace CarSharing.Server.Migrations
                     b.Property<string>("CarName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CarRentalEndDate")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("CarRentalEndDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("CarRentalStartDate")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("CarRentalStartDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("PriceForAllTime")
-                        .HasColumnType("int");
+                    b.Property<double>("PriceForAllTime")
+                        .HasColumnType("float");
 
                     b.Property<bool>("StartAndEndRental")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("UserId1")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CarId");
 
-                    b.HasIndex("UserId1");
-
                     b.ToTable("CarRentals");
                 });
 
-            modelBuilder.Entity("CarSharing.Models.Rental.RentalHistory", b =>
+            modelBuilder.Entity("CarSharing.Models.Rental.RentalHistoryEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -167,22 +171,28 @@ namespace CarSharing.Server.Migrations
                     b.Property<string>("CareName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EndRentalDateHistory")
+                    b.Property<DateTime?>("EndRentalDateHistory")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double?>("PriceAllTime")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("StartRentalDateHistory")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PriceAllTime")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StartRentalDateHistory")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("carRentalId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("carRentalId");
 
@@ -260,6 +270,9 @@ namespace CarSharing.Server.Migrations
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double?>("UserBalance")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RoleId");
@@ -267,35 +280,35 @@ namespace CarSharing.Server.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CarSharing.Models.CarModels.CarModel", b =>
+            modelBuilder.Entity("CarSharing.Models.CarModels.CarModelEntity", b =>
                 {
-                    b.HasOne("CarSharing.Models.CarModels.CarBrands", "CarBrands")
+                    b.HasOne("CarSharing.Models.CarModels.CarBrandsEntity", "CarBrands")
                         .WithMany("Cars")
-                        .HasForeignKey("CarBrandsId1");
+                        .HasForeignKey("CarBrandsId");
 
                     b.Navigation("CarBrands");
                 });
 
-            modelBuilder.Entity("CarSharing.Models.Rental.ActiveCarRental", b =>
+            modelBuilder.Entity("CarSharing.Models.Rental.ActiveCarRentalEntity", b =>
                 {
-                    b.HasOne("CarSharing.Models.CarModels.CarModel", "Car")
+                    b.HasOne("CarSharing.Models.CarModels.CarModelEntity", "Car")
                         .WithMany("carRentals")
                         .HasForeignKey("CarId");
 
-                    b.HasOne("CarSharing.Models.UserModels.UserEntity", "User")
-                        .WithMany("carRentals")
-                        .HasForeignKey("UserId1");
-
                     b.Navigation("Car");
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CarSharing.Models.Rental.RentalHistory", b =>
+            modelBuilder.Entity("CarSharing.Models.Rental.RentalHistoryEntity", b =>
                 {
-                    b.HasOne("CarSharing.Models.Rental.ActiveCarRental", "carRental")
+                    b.HasOne("CarSharing.Models.UserModels.UserEntity", "User")
+                        .WithMany("carRentalsHistory")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("CarSharing.Models.Rental.ActiveCarRentalEntity", "carRental")
                         .WithMany("rentalHistories")
                         .HasForeignKey("carRentalId");
+
+                    b.Navigation("User");
 
                     b.Navigation("carRental");
                 });
@@ -309,24 +322,24 @@ namespace CarSharing.Server.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("CarSharing.Models.CarModels.CarBrands", b =>
+            modelBuilder.Entity("CarSharing.Models.CarModels.CarBrandsEntity", b =>
                 {
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("CarSharing.Models.CarModels.CarModel", b =>
+            modelBuilder.Entity("CarSharing.Models.CarModels.CarModelEntity", b =>
                 {
                     b.Navigation("carRentals");
                 });
 
-            modelBuilder.Entity("CarSharing.Models.Rental.ActiveCarRental", b =>
+            modelBuilder.Entity("CarSharing.Models.Rental.ActiveCarRentalEntity", b =>
                 {
                     b.Navigation("rentalHistories");
                 });
 
             modelBuilder.Entity("CarSharing.Models.UserModels.UserEntity", b =>
                 {
-                    b.Navigation("carRentals");
+                    b.Navigation("carRentalsHistory");
                 });
 #pragma warning restore 612, 618
         }

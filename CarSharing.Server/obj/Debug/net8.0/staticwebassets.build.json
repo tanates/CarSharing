@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "EIz2NWazBqXhUUhlmGP9Zxvn73PG56QgfLvAp1lBkS8=",
+  "Hash": "YzEs5kLrVTQhng+NASPXM4HFzwhaeahu7g3nTOz9gT8=",
   "Source": "CarSharing.Server",
   "BasePath": "_content/CarSharing.Server",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "E:\\CarSharing\\carsharing.client\\carsharing.client.esproj",
+      "Identity": "C:\\Users\\timur\\Desktop\\CarSharing\\carsharing.client\\carsharing.client.esproj",
       "Version": 2,
       "Source": "carsharing.client",
       "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
@@ -59,10 +59,10 @@
       "OriginalItemSpec": "C:\\Users\\timur\\.nuget\\packages\\microsoft.aspnetcore.components.quickgrid\\8.0.2\\staticwebassets\\QuickGrid.razor.js"
     },
     {
-      "Identity": "E:\\CarSharing\\CarSharing.Server\\obj\\Debug\\net8.0\\scopedcss\\bundle\\CarSharing.Server.styles.css",
+      "Identity": "C:\\Users\\timur\\Desktop\\CarSharing\\CarSharing.Server\\obj\\Debug\\net8.0\\scopedcss\\bundle\\CarSharing.Server.styles.css",
       "SourceId": "CarSharing.Server",
       "SourceType": "Computed",
-      "ContentRoot": "E:\\CarSharing\\CarSharing.Server\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\timur\\Desktop\\CarSharing\\CarSharing.Server\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/CarSharing.Server",
       "RelativePath": "CarSharing.Server.styles.css",
       "AssetKind": "All",
@@ -75,7 +75,7 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "E:\\CarSharing\\CarSharing.Server\\obj\\Debug\\net8.0\\scopedcss\\bundle\\CarSharing.Server.styles.css"
+      "OriginalItemSpec": "C:\\Users\\timur\\Desktop\\CarSharing\\CarSharing.Server\\obj\\Debug\\net8.0\\scopedcss\\bundle\\CarSharing.Server.styles.css"
     }
   ]
 }

@@ -30,7 +30,7 @@ namespace CarSharing.Server.Repository
             return _mapper.Map<UserEntity>(userEntity);
         }
 
-        public async Task<bool> Update(ProfileUser profile)
+        public async Task<bool> Update(ProfileUser profile )
         {
             var user = await _context.Users.FirstOrDefaultAsync(item => item.Email == profile.Email);
             if (user == null)
@@ -60,14 +60,15 @@ namespace CarSharing.Server.Repository
             return true;
         }
 
-        public async Task <bool> UpdatePasswod ()
+
+        public async Task <bool> CheckIsActivation(string email)
         {
+            var user = await _context.Users.FindAsync(email);
+           
+            var result =  user?.ActivatedAccount == false ? true : false ;
 
-
-            return true;
+            return result; 
         }
-
-
 
     }
 }

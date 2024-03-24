@@ -1,4 +1,5 @@
-﻿using CarSharing.Models.UserModels;
+﻿using CarSharing.Models.Rental;
+using CarSharing.Models.UserModels;
 using CarSharing.Server.Models.AuthorizationModels;
 using CarSharing.Server.Models.UserModels;
 using CarSharing.Server.Repository;
@@ -20,24 +21,30 @@ namespace CarSharing.Server.Controllers
     public class ProfileController : ControllerBase
     {
 
-        private readonly ApplicationContext _context;
-
-        public ProfileController(ApplicationContext context)
-        {
-            _context = context;
-        }
-
         [HttpGet ("get")]
-        public async Task<ActionResult<UserEntity>> GetUserProfile(UserService userService)
+        
+        public async Task<ActionResult> GetUserProfile(UserService userService , RentalServisec rentalServisec )
         {
             string email = "";
             if (Request.Cookies["email"] != null)
             {
-               
+                email = Request.Cookies["email"].ToString();
             }
-            email = Request.Cookies["email"].ToString();
+            else
+            {
+                // Верните ошибку, если куки email не существует
+                return BadRequest("Email cookie not found");
+            }
 
-            return await userService.GetUserProfile(email);
+            var rentalHistory = await rentalServisec.GetHistoryRental(email);
+            var userProfile =  await userService.GetUserProfile(email);
+
+            return Ok(new Dictionary<string, object>
+            {
+                { "UserEntity", userProfile },
+                { "RentalHistoryEntity", rentalHistory }
+            });
+
         }
 
         // GET api/<ProfileController>/5
@@ -51,7 +58,19 @@ namespace CarSharing.Server.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] ProfileRequist requist  , UserService service)
         {
-           var result = await   service.Update(requist);
+
+            string email = "";
+            if (Request.Cookies["email"] != null)
+            {
+                email = Request.Cookies["email"].ToString();
+            }
+            else
+            {
+                // Верните ошибку, если куки email не существует
+                return BadRequest("Email cookie not found");
+            }
+            requist.Email = email;
+            var result = await   service.Update(requist);
           if (result == null)
             {
              return BadRequest();

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Bdfbp6Zymf4TNSrgjOpyP5MMCvPdXasU1B2nWJO5NRY=",
+  "Source": "SMTPServer",
+  "BasePath": "_content/SMTPServer",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

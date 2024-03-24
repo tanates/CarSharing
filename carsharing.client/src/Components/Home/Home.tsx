@@ -1,47 +1,33 @@
-import { Component } from "react";
+import React, { useState, useEffect } from "react";
 
-import UserService from "../../Services/user.service";
+import { getPublicContent } from "../../Services/user.service";
 
-type Props = {};
+const Home: React.FC = () => {
+  const [content, setContent] = useState<string>("");
 
-type State = {
-  content: string;
-}
-
-export default class Home extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      content: ""
-    };
-  }
-
-  componentDidMount() {
-    UserService.getPublicContent().then(
-      response => {
-        this.setState({
-          content: response.data
-        });
+  useEffect(() => {
+    getPublicContent().then(
+      (response) => {
+        setContent(response.data);
       },
-      error => {
-        this.setState({
-          content:
-            (error.response && error.response.data) ||
-            error.message ||
-            error.toString()
-        });
+      (error) => {
+        const _content =
+          (error.response && error.response.data) ||
+          error.message ||
+          error.toString();
+
+        setContent(_content);
       }
     );
-  }
+  }, []);
 
-  render() {
-    return (
-      <div className="container">
-        <header className="jumbotron">
-          <h3>{this.state.content}</h3>
-        </header>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="container">
+      <header className="jumbotron">
+        <h3>{content}</h3>
+      </header>
+    </div>
+  );
+};
+
+export default Home;

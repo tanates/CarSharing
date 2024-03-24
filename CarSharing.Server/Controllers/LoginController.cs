@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using System;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
@@ -19,11 +20,9 @@ namespace CarSharing.Server.Controllers
     [Route("[controller]")]
     public class LoginController : ControllerBase
     {
-        private readonly ApplicationContext _context;
         private readonly IHttpContextAccessor _httpContext;
         public LoginController(ApplicationContext context , IHttpContextAccessor httpContext)
         {
-           _context = context;
             _httpContext    = httpContext;
         }
 
@@ -32,9 +31,15 @@ namespace CarSharing.Server.Controllers
         {
             var httpContext = _httpContext.HttpContext;
             var token = await userService.Login(model.Email , model.Password);
-         
-            httpContext.Response.Cookies.Append("testy-login", token);
-            HttpContext.Response.Cookies.Append("email", model.Email );
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false, // Установите в false для тестового окружения без SSL
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddMinutes(30)
+            };
+            httpContext.Response.Cookies.Append("testy-login", token, cookieOptions);
+            HttpContext.Response.Cookies.Append("email", model.Email , cookieOptions);
             return Ok(token);
         }
 

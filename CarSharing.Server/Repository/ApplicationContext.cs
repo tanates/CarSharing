@@ -12,8 +12,8 @@ namespace CarSharing.Server.Repository
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<CarBrandsEntity> Brands { get; set; }
         public DbSet<CarModelEntity> carModels { get; set; }
-        public DbSet<ActiveCarRental> CarRentals { get; set; }
-        public DbSet<RentalHistory> RentalHistory { get; set; }
+        public DbSet<ActiveCarRentalEntity> CarRentals { get; set; }
+        public DbSet<RentalHistoryEntity> RentalHistory { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Registration> Registration { get; set; } = default!;
         public DbSet<Login> Login { get; set; }

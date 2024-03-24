@@ -12,8 +12,9 @@ namespace CarSharing.Server.Models.UserModels
             DriversLicense = requist.DriversLicense ?? "";
             PassportNumber = requist.PassportNumber ?? "";
             PhoneNumber = requist.PhoneNumber ?? "";
+            UserBalance = requist.UserBalance ;
         }
-
+        public double UserBalance { get; private set; }
         public string? Email { get; private set; }
         public string? Surname { get; private set; }
         public bool ActivatedAccount { get; private set; }

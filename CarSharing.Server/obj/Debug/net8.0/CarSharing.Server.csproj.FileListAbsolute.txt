@@ -814,3 +814,6 @@ E:\CarSharing\CarSharing.Server\obj\Debug\net8.0\ref\CarSharing.Server.dll
 E:\CarSharing\CarSharing.Server\bin\Debug\net8.0\AutoMapper.dll
 E:\CarSharing\CarSharing.Server\bin\Debug\net8.0\BCrypt.Net-Next.dll
 E:\CarSharing\CarSharing.Server\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\timur\Desktop\CarSharing\CarSharing.Server\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\timur\Desktop\CarSharing\CarSharing.Server\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\timur\Desktop\CarSharing\CarSharing.Server\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

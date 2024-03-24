@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarSharing.Server", "CarSharing.Server\CarSharing.Server.csproj", "{31E5CAC1-6E72-4D9D-B9B1-5BB0962BA077}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarSharing.Server", "CarSharing.Server\CarSharing.Server.csproj", "{31E5CAC1-6E72-4D9D-B9B1-5BB0962BA077}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "carsharing.client", "carsharing.client\carsharing.client.esproj", "{59702240-B0FC-4A0D-94E4-8CE22A2B4775}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMTPServer", "SMTPServer\SMTPServer.csproj", "{F7308638-6701-4D15-9C0B-E92EDCB99DF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{59702240-B0FC-4A0D-94E4-8CE22A2B4775}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59702240-B0FC-4A0D-94E4-8CE22A2B4775}.Release|Any CPU.Build.0 = Release|Any CPU
 		{59702240-B0FC-4A0D-94E4-8CE22A2B4775}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F7308638-6701-4D15-9C0B-E92EDCB99DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7308638-6701-4D15-9C0B-E92EDCB99DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7308638-6701-4D15-9C0B-E92EDCB99DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7308638-6701-4D15-9C0B-E92EDCB99DF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

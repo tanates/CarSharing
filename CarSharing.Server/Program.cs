@@ -2,6 +2,8 @@ using CarSharing.Models.AuthorizationModels;
 using CarSharing.Server;
 using CarSharing.Server.Interface;
 using CarSharing.Server.Interface.Auth;
+using CarSharing.Server.Interface.Car;
+using CarSharing.Server.Interface.CarInterface;
 using CarSharing.Server.Models;
 using CarSharing.Server.Models.JWT;
 using CarSharing.Server.Repository;
@@ -45,11 +47,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<ICarModelRepository, CarModelRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRentaACarRepository, RentalRepository>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<CartCarsService>();
+builder.Services.AddScoped<RentalServisec>();
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddScoped <IPasswordHash , PasswordHash>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+builder.Services.AddScoped<ICheckingAccountStatus, CheckingAccountStatus>();
 builder.Services.AddAutoMapper(typeof(DataBaseMapping));
 builder.Services.AddCors(options =>
 {

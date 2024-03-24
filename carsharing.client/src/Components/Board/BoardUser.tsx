@@ -1,53 +1,35 @@
-import { Component } from "react";
-import UserService from "../../Services/user.service";
-import EventBus from "../../Common/EventBus";
+import React, { useState, useEffect } from "react";
 
-type Props = {};
+import { getUserBoard } from "../../Services/user.service";
 
-type State = {
-  content: string;
-}
+const BoardUser: React.FC = () => {
+  const [content, setContent] = useState<string>("");
 
-export default class BoardUser extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      content: ""
-    };
-  }
-
-  componentDidMount() {
-    UserService.getUserBoard().then(
-      response => {
-        this.setState({
-          content: response.data
-        });
+  useEffect(() => {
+    getUserBoard().then(
+      (response) => {
+        setContent(response.data);
       },
-      error => {
-        this.setState({
-          content:
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString()
-        });
+      (error) => {
+        const _content =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
 
-        if (error.response && error.response.status === 401) {
-          EventBus.dispatch("logout");
-        }
+        setContent(_content);
       }
     );
-  }
+  }, []);
 
-  render() {
-    return (
-      <div className="container">
+  return (
+    <div className="container">
       <header className="jumbotron">
-        <h3>{this.state.content}</h3>
+        <h3>{content}</h3>
       </header>
     </div>
-    );
-  }
-}
+  );
+};
+
+export default BoardUser;

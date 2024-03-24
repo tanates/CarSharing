@@ -22,22 +22,27 @@ namespace CarSharing.Server.Servisec
         }
 
 
-        public async Task Register(string userName , string password, string email)
+        public async Task Register(string userName , string password, string email )
         {
-            var hashedPassword = _passwordHash.Generate(password);
+            var hashedPassword =  _passwordHash.Generate(password);
 
-            var user = User.Creat(Guid.NewGuid(), email, hashedPassword, userName);
+            var user = User.Creat(Guid.NewGuid(), email, hashedPassword, userName, 0);
             await _repository.Add(user);
         }
 
         public async Task<string> Login(string email , string password)
         {
             var user = await _repository.GetByEmail(email);
+            if (user==null )
+            {
+                throw new Exception("Пользователь не зарегистрирован");
+            }
             var result = _passwordHash.VerifyPassword(password, user.PasswordHash);
             if (result == false)
             {
                 throw new Exception("Неверный пороль");
             }
+
             var token = _jwtProvider.GeneratToken(user);
             return token;
         }
